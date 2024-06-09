@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Container, VStack, HStack, Box, Text, Image, SimpleGrid, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import profilesData from "../data/profilesData";
 import { Link } from "react-router-dom";
 import { FaHeart, FaTimes, FaUser } from "react-icons/fa";
 
