@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, VStack, HStack, Box, Text, Image, Button, IconButton, Avatar, Badge, useToast } from "@chakra-ui/react";
+import { Container, VStack, HStack, Box, Text, Image, SimpleGrid } from "@chakra-ui/react";
 import { FaHeart, FaTimes, FaUser } from "react-icons/fa";
 
 const profiles = [
@@ -27,62 +27,22 @@ const profiles = [
 ];
 
 const Index = () => {
-  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
-  const toast = useToast();
-
-  const handleLike = () => {
-    toast({
-      title: "Liked!",
-      description: `You liked ${profiles[currentProfileIndex].name}.`,
-      status: "success",
-      duration: 2000,
-      isClosable: true,
-    });
-    nextProfile();
-  };
-
-  const handleDislike = () => {
-    toast({
-      title: "Disliked!",
-      description: `You disliked ${profiles[currentProfileIndex].name}.`,
-      status: "error",
-      duration: 2000,
-      isClosable: true,
-    });
-    nextProfile();
-  };
-
-  const nextProfile = () => {
-    setCurrentProfileIndex((prevIndex) => (prevIndex + 1) % profiles.length);
-  };
-
-  const currentProfile = profiles[currentProfileIndex];
+  const displayedProfiles = profiles.slice(0, 9);
 
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <VStack spacing={4}>
-        <Box borderWidth="1px" borderRadius="lg" overflow="hidden" width="100%" maxW="sm">
-          <Image src={currentProfile.image} alt={currentProfile.name} />
-          <Box p="6">
-            <HStack spacing={4} alignItems="center">
-              <Avatar name={currentProfile.name} src={currentProfile.image} />
-              <VStack align="start">
-                <Text fontWeight="bold" fontSize="xl">
-                  {currentProfile.name}, {currentProfile.age}
-                </Text>
-                <Badge borderRadius="full" px="2" colorScheme="teal">
-                  Online
-                </Badge>
-              </VStack>
-            </HStack>
-            <Text mt={4}>{currentProfile.bio}</Text>
+      <SimpleGrid columns={3} spacing={0} width="100%">
+        {displayedProfiles.map((profile) => (
+          <Box key={profile.id} borderWidth="1px" borderRadius="lg" overflow="hidden">
+            <Image src={profile.image} alt={profile.name} />
+            <Box p="4">
+              <Text fontWeight="bold" fontSize="xl">
+                {profile.name}, {profile.age}
+              </Text>
+            </Box>
           </Box>
-        </Box>
-        <HStack spacing={4}>
-          <IconButton aria-label="Dislike" icon={<FaTimes />} size="lg" colorScheme="red" onClick={handleDislike} />
-          <IconButton aria-label="Like" icon={<FaHeart />} size="lg" colorScheme="green" onClick={handleLike} />
-        </HStack>
-      </VStack>
+        ))}
+      </SimpleGrid>
     </Container>
   );
 };
