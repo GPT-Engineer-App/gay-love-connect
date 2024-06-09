@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Container, VStack, HStack, Box, Text, Image, SimpleGrid } from "@chakra-ui/react";
+import { Container, VStack, HStack, Box, Text, Image, SimpleGrid, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { FaHeart, FaTimes, FaUser } from "react-icons/fa";
 
 const profiles = [
@@ -34,7 +35,16 @@ const Index = () => {
       <SimpleGrid columns={3} spacing={0} width="100%">
         {displayedProfiles.map((profile) => (
           <Box key={profile.id} borderWidth="1px" borderRadius="lg" overflow="hidden">
-            <Image src={profile.image} alt={profile.name} />
+            <LinkBox as="article" borderWidth="1px" borderRadius="lg" overflow="hidden">
+              <Image src={profile.image} alt={profile.name} boxSize="200px" objectFit="cover" />
+              <Box p="4">
+                <LinkOverlay as={Link} to={`/profile/${profile.id}`}>
+                  <Text fontWeight="bold" fontSize="xl">
+                    {profile.name}, {profile.age}
+                  </Text>
+                </LinkOverlay>
+              </Box>
+            </LinkBox>
             <Box p="4">
               <Text fontWeight="bold" fontSize="xl">
                 {profile.name}, {profile.age}
